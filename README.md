@@ -1,7 +1,9 @@
 # Repositório do Bootcamp Santander 
-Repositorio Criado para os Desafios propostos do Bootcamp.
+Repositório criado para os desafios propostos do Bootcamp.
 
-## Desafio - 1 
+## Desafio 1 
 Git/Github
+
+## Desafio 2
 
 
