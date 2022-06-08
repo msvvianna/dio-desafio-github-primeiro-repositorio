@@ -1,0 +1,894 @@
+﻿INSTALAÇÃO NO LINUX UBUNTU/DEBIAN
+
+$ sudo apt-get install git
+$ git --version
+$ git config --global user.name “<name>”
+$ ls -lha
+$ nano .gitconfig → editar o arquivo de configuração do git
+
+inserir linha e-mail = <seu e-mail>
+
+$ git config --global -l → informa as configurações do arquivo .gitconfig
+
+TRACKEAMENTO GIT STAGE
+
+$ mkdir RepositorioGit 
+$ cd RepositorioGit/ 
+$ touch ola.txt 
+$ sudo nano ola.txt 
+
+Hello World! 
+Esse é o nosso primeiro arquivo para testarmos o trackeamento no git. 
+Vamos continuar com os nossos testes. 
+
+$ git init → cria um novo repositório 
+$ git status → mostra o status atual do repositório
+$ git add ola.txt → adiciona o arquivo no stage 
+$ git status 
+  
+
+REMOVER MONITORAMENTO
+
+$ git rm ola.txt -f → remover o arquivo do repositorio o -f (forçado pois o arquivo não esta no repositorio remoto ainda)
+
+$ git rm testando/. -fr → remover diretorios, subdiretorios, o -f (force) e -r (recursivamente)
+
+RENOMEAR OU MOVER ARQUIVOS
+
+$ git mv <nome do arquivo>
+
+ROLL BACK DE ALTERAÇOES NÃO RASTREADAS
+
+$ git checkout -- <nome do arquivo> → retorna o arquivo para versão anterior como estava no stage
+
+
+NEM TUDO PRECISA SER MONITORADO
+
+$ pwd
+/home/msv/RepositorioGit 
+
+$ mkdir cache
+$ cd cache
+$ touch ola_todos.txt
+$ nano ola_todos.txt
+Olá a todos!!!!
+
+$ cd ..
+/home/msv/RepositorioGit 
+
+$ git status
+On branch master 
+
+No commits yet 
+
+Changes to be committed: 
+  (use "git rm --cached <file>..." to unstage) 
+	new file:   hello.txt 
+	new file:   ola.txt 
+
+Untracked files: 
+  (use "git add <file>..." to include in what will be committed) 
+	.gitignore 
+	cache/ 
+
+$ git add .gitignore
+$ git status 
+On branch master 
+
+No commits yet 
+
+Changes to be committed: 
+  (use "git rm --cached <file>..." to unstage) 
+	new file:   .gitignore 
+	new file:   hello.txt 
+	new file:   ola.txt 
+
+Untracked files: 
+  (use "git add <file>..." to include in what will be committed) 
+	cache/ 
+
+$ nano .gitignore 
+inserir no arquivo a palavra cache → o git irá ignorar a monitoração da pasta cache/
+
+$ git status 
+On branch master 
+
+No commits yet 
+
+Changes to be committed: 
+  (use "git rm --cached <file>..." to unstage) 
+	new file:   .gitignore 
+	new file:   hello.txt 
+	new file:   ola.txt 
+
+Changes not staged for commit: 
+  (use "git add <file>..." to update what will be committed) 
+  (use "git restore <file>..." to discard changes in working directory) 
+	modified:   .gitignore 
+
+$ git add .gitignore 
+$ git status 
+On branch master 
+
+No commits yet 
+
+Changes to be committed: 
+  (use "git rm --cached <file>..." to unstage) 
+	new file:   .gitignore 
+	new file:   hello.txt 
+	new file:   ola.txt 
+
+COMITANDO INFORMAÇOES NO REPOSITÓRIO
+
+$ git commit -m "Commit inicial do Projeto" → comitar 
+[master (root-commit) 9df787d] Commit inicial do Projeto 
+ 3 files changed, 7 insertions(+) 
+ create mode 100644 .gitignore 
+ create mode 100644 hello.txt 
+ create mode 100644 ola.txt
+
+$ git status → você está com sua area de stage vazia e está ma branch master
+On branch master 
+nothing to commit, working tree clean 
+
+
+ENVIANDO PROJETO PARA O REPOSITÓRIO
+
+$ mkdir git_workflow 
+$ cd git_workflow/ 
+$ git init 
+Initialized empty Git repository in /home/msv/git_workflow/.git/ 
+
+$ ls -la 
+total 12 
+drwxr-xr-x  3 msv msv 4096 abr 29 08:53 . 
+drwxr-xr-x 33 msv msv 4096 abr 29 08:53 .. 
+drwxr-xr-x  7 msv msv 4096 abr 29 08:53 .git 
+
+criar um repositorio no github com o nome de CLI_GITWORKFLOW
+
+$ git remote add origin < enderço do seu repositorio remoto github>
+$ git remote -v 
+origin	< enderço do seu repositorio remoto github> (fetch) 
+origin	< enderço do seu repositorio remoto github> (push) 
+
+$ git pull origin master 
+remote: Enumerating objects: 3, done. 
+remote: Counting objects: 100% (3/3), done. 
+remote: Compressing objects: 100% (2/2), done. 
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0 
+Unpacking objects: 100% (3/3), 633 bytes | 633.00 KiB/s, done. 
+From https://github.com/<nickname>/CLI_GITWORKFLOW 
+ * branch            master     -> FETCH_HEAD 
+ * [new branch]      master     -> origin/master 
+
+$ ls -lha 
+total 16K 
+drwxr-xr-x  3 msv msv 4,0K abr 29 08:56 . 
+drwxr-xr-x 33 msv msv 4,0K abr 29 08:53 .. 
+drwxr-xr-x  8 msv msv 4,0K abr 29 08:56 .git 
+-rw-r--r--  1 msv msv   59 abr 29 08:56 README.md 
+
+copiar arquivos da pasta sample_git_workflow para o repositorio git_workflow
+
+$ ls 
+estilo.css  images  index.html  README.md 
+
+$ git status 
+On branch master 
+Untracked files: 
+  (use "git add <file>..." to include in what will be committed) 
+	estilo.css 
+	images/ 
+	index.html 
+
+nothing added to commit but untracked files present (use "git add" to track) 
+
+$ git add estilo.css 
+$ git add images/. 
+$ git add index.html 
+
+$ git status 
+On branch master 
+Changes to be committed: 
+  (use "git restore --staged <file>..." to unstage) 
+	new file:   estilo.css 
+	new file:   images/git-workflow.gif 
+	new file:   index.html 
+
+$ git commit -m "Projeto ok" 
+[master ea15635] Projeto ok 
+ 4 files changed, 215 insertions(+) 
+ create mode 100644 estilo.css 
+ create mode 100644 images/.DS_Store 
+ create mode 100644 images/git-workflow.gif 
+ create mode 100644 index.html 
+
+$ git push origin master 
+Username for 'https://github.com': <seu e-mail> 
+Password for 'https://<seu e-mail>@github.com': 
+Enumerating objects: 8, done. 
+Counting objects: 100% (8/8), done. 
+Delta compression using up to 4 threads 
+Compressing objects: 100% (7/7), done. 
+Writing objects: 100% (7/7), 17.05 KiB | 3.41 MiB/s, done. 
+Total 7 (delta 0), reused 0 (delta 0), pack-reused 0 
+To https://github.com/<nickname>/CLI_GITWORKFLOW.git 
+   e19a343..ea15635  master -> master 
+
+
+TRABALHANDO COM TRANSAÇOES
+
+realizar alterações no arquivo estilo.css ( responsibilidade e formulario)
+
+$ git status 
+On branch master 
+Changes not staged for commit: 
+  (use "git add <file>..." to update what will be committed) 
+  (use "git restore <file>..." to discard changes in working directory) 
+	modified:   estilo.css 
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+$ git add estilo.css 
+$ git status 
+On branch master 
+Changes to be committed: 
+  (use "git restore --staged <file>..." to unstage) 
+	modified:   estilo.css 
+
+$ git commit -m "Layout Responsivo + Destaque no formulario de contato" 
+[master 055bf30] Layout Responsivo + Destaque no formulario de contato 
+ 1 file changed, 8 insertions(+), 8 deletions(-) 
+
+$ git push origin master 
+Username for 'https://github.com': <seu e-mail> 
+Password for 'https://<seu e-mail>@github.com': 
+Enumerating objects: 5, done. 
+Counting objects: 100% (5/5), done. 
+Delta compression using up to 4 threads 
+Compressing objects: 100% (3/3), done. 
+Writing objects: 100% (3/3), 385 bytes | 385.00 KiB/s, done. 
+Total 3 (delta 2), reused 0 (delta 0), pack-reused 0 
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects. 
+To https://github.com/<nickname>/CLI_GITWORKFLOW.git 
+   ea15635..055bf30  master -> master 
+
+
+
+CLONANDO REPOSITORIO VIA TERMINAL
+
+$ git clone < enderço do seu repositorio remoto github>
+Cloning into 'CLI_GITWORKFLOW'... 
+remote: Enumerating objects: 13, done. 
+remote: Counting objects: 100% (13/13), done. 
+remote: Compressing objects: 100% (10/10), done. 
+remote: Total 13 (delta 2), reused 10 (delta 2), pack-reused 0 
+Receiving objects: 100% (13/13), 17.97 KiB | 353.00 KiB/s, done. 
+Resolving deltas: 100% (2/2), done. 
+
+$ cd CLI_GITWORKFLOW/ 
+$ git remote 
+origin 
+
+$ git remote -v 
+origin	https://github.com/<nickname>/CLI_GITWORKFLOW.git (fetch) 
+origin	https://github.com/<nickname>/CLI_GITWORKFLOW.git (push) 
+
+
+EFETUANDO DOWNLOAD DE PROJETO PÚBLICO
+
+entrar no Github e fazer download .zip 
+
+
+[EXTRA] CONTA E REPOSITÓRIO NO BITBUCKET
+
+    • criar uma conta
+    • criar um repositorio
+
+[EXTRA] PARAMETRIZAÇÃO DO AMBIENTE NO BITBUCKET
+
+copiar endereço do repositorio
+
+$ mkdir bit_gitworkflow
+$ cd bit_gitworkflow
+$ git init
+
+copiar arquivos da pasta sample_git_workflow para o repositorio bit_gitworkflow
+
+$ ls 
+estilo.css  images  index.html  README.md 
+
+$ git status 
+On branch master 
+Untracked files: 
+  (use "git add <file>..." to include in what will be committed) 
+	estilo.css 
+	images/ 
+	index.html 
+
+nothing added to commit but untracked files present (use "git add" to track) 
+
+$ git add .
+
+$ git status 
+On branch master 
+Changes to be committed: 
+  (use "git restore --staged <file>..." to unstage) 
+	new file:   estilo.css 
+	new file:   images/git-workflow.gif 
+	new file:   index.html 
+
+$ git remote add bit_server <endereço do repositorio remoto>
+$ git remote – v 
+
+$ git commit -m "Projeto ok" 
+[master ea15635] Projeto ok 
+ 4 files changed, 215 insertions(+) 
+ create mode 100644 estilo.css 
+ create mode 100644 images/git-workflow.gif 
+ create mode 100644 index.html 
+
+$ git push bit_server master 
+
+
+ANALISANDO O HISTÓRICO COM GIT LOG
+
+$ cd CLI_GITWORKFLOW
+
+$ git log 
+commit f289b93639cdc2a2f8d94e95cfb7847671f66ca1 (HEAD -> master, origin/master, origin/HEAD) 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:37:42 2020 -0300 
+
+    Removido arquivo .DS_Store da pasta images 
+
+commit 055bf30db594722abcf00579cfe92a86b35a8f6f 
+Author: <seu nome> <seu e-mail> 
+Date:   Wed Apr 29 09:25:23 2020 -0300 
+
+    Layout Responsivo + Destaque no formulario de contato 
+
+commit ea156358b4de2ad2ea761f1f17f2bafc69c2d47a 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:00:45 2020 -0300 
+
+    Projeto ok 
+
+commit e19a343f5459cb96ab5603e866911b8f403a5d18 
+Author: <nickname> <<seu e-mail>> 
+Date:   Wed Apr 29 08:51:01 2020 -0300 
+
+:...skipping... 
+commit f289b93639cdc2a2f8d94e95cfb7847671f66ca1 (HEAD -> master, origin/master, origin/HEAD) 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:37:42 2020 -0300 
+
+    Removido arquivo .DS_Store da pasta images 
+
+commit 055bf30db594722abcf00579cfe92a86b35a8f6f 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:25:23 2020 -0300 
+
+    Layout Responsivo + Destaque no formulario de contato 
+
+commit ea156358b4de2ad2ea761f1f17f2bafc69c2d47a 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:00:45 2020 -0300 
+
+    Projeto ok 
+
+commit e19a343f5459cb96ab5603e866911b8f403a5d18 
+Author: <nickname> <<seu e-mail>> 
+Date:   Wed Apr 29 08:51:01 2020 -0300 
+
+    Initial commit 
+
+
+$ git log -n2 
+commit f289b93639cdc2a2f8d94e95cfb7847671f66ca1 (HEAD -> master, origin/master, origin/HEAD) 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:37:42 2020 -0300 
+
+    Removido arquivo .DS_Store da pasta images 
+
+commit 055bf30db594722abcf00579cfe92a86b35a8f6f 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:25:23 2020 -0300 
+
+    Layout Responsivo + Destaque no formulario de contato 
+
+$ git log --oneline 
+f289b93 (HEAD -> master, origin/master, origin/HEAD) Removido arquivo .DS_Store da pasta images 
+055bf30 Layout Responsivo + Destaque no formulario de contato 
+ea15635 Projeto ok 
+e19a343 Initial commit 
+
+$ git log --oneline -n 2 
+f289b93 (HEAD -> master, origin/master, origin/HEAD) Removido arquivo .DS_Store da pasta images 
+055bf30 Layout Responsivo + Destaque no formulario de contato 
+
+$ git log --stat 
+commit f289b93639cdc2a2f8d94e95cfb7847671f66ca1 (HEAD -> master, origin/master, origin/HEAD) 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:37:42 2020 -0300 
+
+    Removido arquivo .DS_Store da pasta images 
+
+ images/.DS_Store | Bin 6148 -> 0 bytes 
+ 1 file changed, 0 insertions(+), 0 deletions(-) 
+
+commit 055bf30db594722abcf00579cfe92a86b35a8f6f 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:25:23 2020 -0300 
+
+    Layout Responsivo + Destaque no formulario de contato 
+
+ estilo.css | 16 ++++++++-------- 
+ 1 file changed, 8 insertions(+), 8 deletions(-) 
+
+commit ea156358b4de2ad2ea761f1f17f2bafc69c2d47a 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Wed Apr 29 09:00:45 2020 -0300 
+
+    Projeto ok 
+
+ estilo.css              | 135 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+ images/.DS_Store        | Bin 0 -> 6148 bytes 
+ images/git-workflow.gif | Bin 0 -> 15397 bytes 
+ index.html              |  80 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+ 4 files changed, 215 insertions(+) 
+
+commit e19a343f5459cb96ab5603e866911b8f403a5d18 
+Author: <nickname> <<seu e-mail>> 
+Date:   Wed Apr 29 08:51:01 2020 -0300 
+
+    Initial commit 
+
+ README.md | 2 ++ 
+ 1 file changed, 2 insertions(+) 
+
+
+$ git log -n 4 --oneline --stat 
+f289b93 (HEAD -> master, origin/master, origin/HEAD) Removido arquivo .DS_Store da pasta images 
+ images/.DS_Store | Bin 6148 -> 0 bytes 
+ 1 file changed, 0 insertions(+), 0 deletions(-) 
+055bf30 Layout Responsivo + Destaque no formulario de contato 
+ estilo.css | 16 ++++++++-------- 
+ 1 file changed, 8 insertions(+), 8 deletions(-) 
+ea15635 Projeto ok 
+ estilo.css              | 135 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+ images/.DS_Store        | Bin 0 -> 6148 bytes 
+ images/git-workflow.gif | Bin 0 -> 15397 bytes 
+ index.html              |  80 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+ 4 files changed, 215 insertions(+) 
+e19a343 Initial commit 
+ README.md | 2 ++ 
+ 1 file changed, 2 insertions(+) 
+
+$ git log --oneline --decorate 
+f289b93 (HEAD -> master, origin/master, origin/HEAD) Removido arquivo .DS_Store da pasta images 
+055bf30 Layout Responsivo + Destaque no formulario de contato 
+ea15635 Projeto ok 
+e19a343 Initial commit 
+
+
+$ git log --oneline --decorate --parents 
+f289b93 055bf30 (HEAD -> master, origin/master, origin/HEAD) Removido arquivo .DS_Store da pasta images 
+055bf30 ea15635 Layout Responsivo + Destaque no formulario de contato 
+ea15635 e19a343 Projeto ok 
+e19a343 Initial commit 
+
+
+COMPREENDENDO O GIT DIFF
+
+realizar alteração nos arquivos:
+estilo.css → inserir /*Criado por Gustavo para o curso de Gitworkflow*/ 
+index.html → alterar <title>Sample Gitworkflow Upinside Treinamentos</title> 
+
+$ git status 
+On branch master 
+Your branch is up to date with 'origin/master'. 
+
+Changes not staged for commit: 
+  (use "git add <file>..." to update what will be committed) 
+  (use "git restore <file>..." to discard changes in working directory) 
+	modified:   estilo.css 
+	modified:   index.html 
+ 
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+
+$ git diff 
+diff --git a/estilo.css b/estilo.css 
+index d1305d2..4c14bf1 100644 
+--- a/estilo.css 
++++ b/estilo.css 
+@@ -1,3 +1,5 @@ 
++/*Criado por Gustavo para o curso de Gitworkflow*/ 
++ 
+ *{ 
+        padding: 0; 
+        margin: 0; 
+diff --git a/index.html b/index.html 
+index e4e5c75..b20e071 100644 
+--- a/index.html 
++++ b/index.html 
+@@ -1,7 +1,7 @@ 
+ <U+FEFF><!DOCTYPE html> 
+ <html> 
+ <head> 
+-       <title>Sample Git</title> 
++       <title>Sample Gitworkflow Upinside Treinamentos</title> 
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700" rel="stylesheet"> 
+        <link rel="stylesheet" href="estilo.css"> 
+ </head> 
+
+$ git add estilo.css 
+$ git status 
+On branch master 
+Your branch is up to date with 'origin/master'. 
+
+Changes to be committed: 
+  (use "git restore --staged <file>..." to unstage) 
+	modified:   estilo.css 
+
+Changes not staged for commit: 
+  (use "git add <file>..." to update what will be committed) 
+  (use "git restore <file>..." to discard changes in working directory) 
+	modified:   index.html 
+
+$ git diff 
+diff --git a/index.html b/index.html 
+index e4e5c75..b20e071 100644 
+--- a/index.html 
++++ b/index.html 
+@@ -1,7 +1,7 @@ 
+ <U+FEFF><!DOCTYPE html> 
+ <html> 
+ <head> 
+-       <title>Sample Git</title> 
++       <title>Sample Gitworkflow Upinside Treinamentos</title> 
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700" rel="stylesheet"> 
+        <link rel="stylesheet" href="estilo.css"> 
+ </head> 
+
+
+$ git diff --staged 
+diff --git a/estilo.css b/estilo.css 
+index d1305d2..4c14bf1 100644 
+--- a/estilo.css 
++++ b/estilo.css 
+@@ -1,3 +1,5 @@ 
++/*Criado por Gustavo para o curso de Gitworkflow*/ 
++ 
+ *{ 
+        padding: 0; 
+        margin: 0; 
+
+
+VERIFICANDO HISTORICO ENTRE COMMITS
+
+
+$ git log --oneline -n 5 
+156b95e (HEAD -> master) Exemplo de git diff 
+f289b93 (origin/master, origin/HEAD) Removido arquivo .DS_Store da pasta images 
+055bf30 Layout Responsivo + Destaque no formulario de contato 
+ea15635 Projeto ok 
+e19a343 Initial commit 
+
+$ git diff f289b93 
+diff --git a/estilo.css b/estilo.css 
+index d1305d2..4c14bf1 100644 
+--- a/estilo.css 
++++ b/estilo.css 
+@@ -1,3 +1,5 @@ 
++/*Criado por Gustavo para o curso de Gitworkflow*/ 
++ 
+ *{ 
+        padding: 0; 
+        margin: 0; 
+diff --git a/index.html b/index.html 
+index e4e5c75..b20e071 100644 
+--- a/index.html 
++++ b/index.html 
+@@ -1,7 +1,7 @@ 
+ <U+FEFF><!DOCTYPE html> 
+ <html> 
+ <head> 
+-       <title>Sample Git</title> 
++       <title>Sample Gitworkflow Upinside Treinamentos</title> 
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu:300,400,700" rel="stylesheet"> 
+        <link rel="stylesheet" href="estilo.css"> 
+ </head> 
+
+$ git diff 055bf30..156b95e 
+
+$ git diff 156b95e~3 
+UTILIZANDO BRANCH 
+
+$ git branch 
+* master 
+
+$ git branch conteudo 
+
+$ git branch -v 
+  conteudo 156b95e Exemplo de git diff 
+* master   156b95e Exemplo de git diff 
+
+$ git log --oneline --decorate --parents 
+156b95e f289b93 (HEAD -> master, origin/master, origin/HEAD, conteudo) Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+055bf30 ea15635 Layout Responsivo + Destaque no formulario de contato 
+ea15635 e19a343 Projeto ok 
+e19a343 Initial commit 
+
+$ git checkout conteudo 
+Switched to branch 'conteudo' 
+
+$ git branch -v 
+* conteudo 156b95e Exemplo de git diff 
+  master   156b95e Exemplo de git diff 
+
+$ git log --oneline --decorate --parents 
+156b95e f289b93 (HEAD -> conteudo, origin/master, origin/HEAD, master) Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+055bf30 ea15635 Layout Responsivo + Destaque no formulario de contato 
+ea15635 e19a343 Projeto ok 
+e19a343 Initial commit 
+
+$ git checkout -b teste 
+Switched to a new branch 'teste' 
+
+$ git branch -v 
+  conteudo 156b95e Exemplo de git diff 
+  master   156b95e Exemplo de git diff 
+* teste    156b95e Exemplo de git diff 
+
+$ git checkout master 
+Switched to branch 'master' 
+Your branch is up to date with 'origin/master'. 
+
+$ git branch -v 
+  conteudo 156b95e Exemplo de git diff 
+* master   156b95e Exemplo de git diff 
+  teste    156b95e Exemplo de git diff 
+
+$ git branch -d teste 
+Deleted branch teste (was 156b95e). 
+
+$ git branch -v 
+  conteudo 156b95e Exemplo de git diff 
+* master   156b95e Exemplo de git diff 
+
+
+COMMIT NA BRANCH 
+
+entrar na branch conteudo e alterar o arquivo index.html
+
+$ git branch -v 
+* conteudo 156b95e Exemplo de git diff 
+  master   156b95e Exemplo de git diff 
+
+$ git status 
+On branch conteudo 
+Changes not staged for commit: 
+  (use "git add <file>..." to update what will be committed) 
+  (use "git restore <file>..." to discard changes in working directory) 
+	modified:   index.html 
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+$ git add . 
+
+$ git status 
+On branch conteudo 
+Changes to be committed: 
+  (use "git restore --staged <file>..." to unstage) 
+	modified:   index.html 
+
+$ git commit -m "Alteração de conteudo OK [conteudo]" 
+[conteudo 9f85550] Alteração de conteudo OK [conteudo] 
+ 1 file changed, 72 insertions(+) 
+
+$ git branch -v 
+* conteudo 9f85550 Alteração de conteudo OK [conteudo] 
+  master   156b95e Exemplo de git diff 
+
+$ git log --oneline -n 5 --parents 
+9f85550 156b95e (HEAD -> conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 (origin/master, origin/HEAD, master) Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+055bf30 ea15635 Layout Responsivo + Destaque no formulario de contato 
+ea15635 e19a343 Projeto ok 
+$ git log --oneline -n 5 --parents --decorate 
+9f85550 156b95e (HEAD -> conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 (origin/master, origin/HEAD, master) Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+055bf30 ea15635 Layout Responsivo + Destaque no formulario de contato 
+ea15635 e19a343 Projeto ok 
+$ git checkout master 
+Switched to branch 'master' 
+Your branch is up to date with 'origin/master'. 
+
+alterar o titulo do arquivo index.html
+
+$ git status 
+On branch master 
+Your branch is up to date with 'origin/master'. 
+
+Changes not staged for commit: 
+  (use "git add <file>..." to update what will be committed) 
+  (use "git restore <file>..." to discard changes in working directory) 
+	modified:   index.html 
+
+no changes added to commit (use "git add" and/or "git commit -a") 
+
+$ git add . 
+
+$ git commit -m "Alteração do Titulo principal" 
+[master 656a74d] Alteração do Titulo principal 
+ 1 file changed, 1 insertion(+), 1 deletion(-) 
+
+$ git log --oneline -n 5 --parents --decorate 
+656a74d 156b95e (HEAD -> master) Alteração do Titulo principal 
+156b95e f289b93 (origin/master, origin/HEAD) Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+055bf30 ea15635 Layout Responsivo + Destaque no formulario de contato 
+ea15635 e19a343 Projeto ok 
+
+$ git branch --no-merged 
+  conteudo 
+
+
+MESCLANDO BRANCH 
+
+$ git branch --no-merged 
+  conteudo 
+
+$ git branch --merged 
+* master 
+
+$ git merge conteudo -m "Alteração na estrutura de conteudo" 
+Auto-merging index.html 
+Merge made by the 'recursive' strategy. 
+ index.html | 72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ 
+ 1 file changed, 72 insertions(+) 
+
+$ git log --oneline -n 5 --parents --decorate 
+7072361 656a74d 9f85550 (HEAD -> master) Alteração na estrutura de conteudo 
+656a74d 156b95e Alteração do Titulo principal 
+9f85550 156b95e (conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 (origin/master, origin/HEAD) Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+
+
+TRABALHANDO COM BRANCH REMOTA 
+
+$ git branch -r 
+  origin/HEAD -> origin/master 
+  origin/master 
+
+$ git log --oneline -n 5 
+7072361 (HEAD -> master) Alteração na estrutura de conteudo 
+656a74d Alteração do Titulo principal 
+9f85550 (conteudo) Alteração de conteudo OK [conteudo] 
+156b95e (origin/master, origin/HEAD) Exemplo de git diff 
+f289b93 Removido arquivo .DS_Store da pasta images 
+
+$ git branch --merge 
+  conteudo 
+* master 
+
+
+$ git push origin conteudo 
+Username for 'https://github.com': <seu e-mail> 
+Password for 'https://<seu e-mail>@github.com': 
+Enumerating objects: 5, done. 
+Counting objects: 100% (5/5), done. 
+Delta compression using up to 4 threads 
+Compressing objects: 100% (3/3), done. 
+Writing objects: 100% (3/3), 1.36 KiB | 1.36 MiB/s, done. 
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0 
+remote: Resolving deltas: 100% (1/1), completed with 1 local object. 
+remote: 
+remote: Create a pull request for 'conteudo' on GitHub by visiting: 
+remote:      https://github.com/<nickname>/CLI_GITWORKFLOW/pull/new/conteudo 
+remote: 
+To https://github.com/<nickname>/CLI_GITWORKFLOW.git 
+ * [new branch]      conteudo -> conteudo 
+
+$ git branch -r -v 
+  origin/HEAD     -> origin/master 
+  origin/conteudo 9f85550 Alteração de conteudo OK [conteudo] 
+  origin/master   156b95e Exemplo de git diff 
+
+$ git push origin master 
+Username for 'https://github.com': <seu e-mail> 
+Password for 'https://<seu e-mail>@github.com': 
+Enumerating objects: 10, done. 
+Counting objects: 100% (10/10), done. 
+Delta compression using up to 4 threads 
+Compressing objects: 100% (6/6), done. 
+Writing objects: 100% (6/6), 633 bytes | 633.00 KiB/s, done. 
+Total 6 (delta 4), reused 0 (delta 0), pack-reused 0 
+remote: Resolving deltas: 100% (4/4), completed with 2 local objects. 
+To https://github.com/<nickname>/CLI_GITWORKFLOW.git 
+   156b95e..7072361  master -> master 
+
+$ git log --oneline --decorate --parents 
+7072361 656a74d 9f85550 (HEAD -> master, origin/master, origin/HEAD) Alteração na estrutura de conteudo 
+656a74d 156b95e Alteração do Titulo principal 
+9f85550 156b95e (origin/conteudo, conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+055bf30 ea15635 Layout Responsivo + Destaque no formulario de contato 
+ea15635 e19a343 Projeto ok 
+e19a343 Initial commit 
+
+
+TRABALHANDO COM TAG NO GIT 
+
+$ git tag versao1.0 
+
+$ git log --oneline --decorate --parents -n 5 
+7072361 656a74d 9f85550 (HEAD -> master, tag: versao1.0, origin/master, origin/HEAD) Alteração na estrutura de conteudo 
+656a74d 156b95e Alteração do Titulo principal 
+9f85550 156b95e (origin/conteudo, conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+
+$ git tag 
+versao1.0 
+
+$ git tag versao_mvp 9f85550 
+$ git log --oneline --decorate --parents -n 5 
+7072361 656a74d 9f85550 (HEAD -> master, tag: versao1.0, origin/master, origin/HEAD) Alteração na estrutura de conteudo 
+656a74d 156b95e Alteração do Titulo principal 
+9f85550 156b95e (tag: versao_mvp, origin/conteudo, conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+
+$ git tag teste f289b93 
+
+$ git log --oneline --decorate --parents -n 5 
+7072361 656a74d 9f85550 (HEAD -> master, tag: versao1.0, origin/master, origin/HEAD) Alteração na estrutura de conteudo 
+656a74d 156b95e Alteração do Titulo principal 
+9f85550 156b95e (tag: versao_mvp, origin/conteudo, conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 Exemplo de git diff 
+f289b93 055bf30 (tag: teste) Removido arquivo .DS_Store da pasta images 
+
+$ git tag -d teste 
+Deleted tag 'teste' (was f289b93) 
+
+$ git log --oneline --decorate --parents -n 5 
+7072361 656a74d 9f85550 (HEAD -> master, tag: versao1.0, origin/master, origin/HEAD) Alteração na estrutura de conteudo 
+656a74d 156b95e Alteração do Titulo principal 
+9f85550 156b95e (tag: versao_mvp, origin/conteudo, conteudo) Alteração de conteudo OK [conteudo] 
+156b95e f289b93 Exemplo de git diff 
+f289b93 055bf30 Removido arquivo .DS_Store da pasta images 
+
+$ git show 
+commit 70723615f6baae8bb1857158b0a1deda71c95dff (HEAD -> master, tag: versao1.0, origin/master, origin/HEAD) 
+Merge: 656a74d 9f85550 
+Author: <seu nome> <<seu e-mail>> 
+Date:   Sat May 2 12:34:15 2020 -0300 
+
+    Alteração na estrutura de conteudo 
+
+$ git push origin versao_mvp 
+Username for 'https://github.com': <seu e-mail> 
+Password for 'https://<seu e-mail>@github.com': 
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 
+To https://github.com/<nickname>/CLI_GITWORKFLOW.git 
+ * [new tag]         versao_mvp -> versao_mvp 
+
+$ git push origin --tags 
+Username for 'https://github.com': <seu e-mail> 
+Password for 'https://<seu e-mail>@github.com': 
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 
+To https://github.com/<nickname>/CLI_GITWORKFLOW.git 
+ * [new tag]         versao1.0 -> versao1.0 
+
+
+

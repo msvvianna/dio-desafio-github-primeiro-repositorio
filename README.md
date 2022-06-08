@@ -1,5 +1,4 @@
-# Repositório de Desafio de Projeto sobre Git/Github da DIO
-Repositorio Criado para o Desafio de Projeto
+# Repositório de Bootcamp Santander 
+Repositorio Criado para o Desafio de Projeto Git/Github
 
-## Tutorial Básico sobre uso do Git/Github em Distro Linux
 
