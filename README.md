@@ -6,5 +6,7 @@ Git/Github
   - Colocar em prática os conteúdos aprendido
 
 ## Desafio 2
+Recriando a página inicial do Instagram
+  - Recriando a página inicial do Instagram, utilizando os conceitos apreendidos de CSS e Flexbox.
 
 
